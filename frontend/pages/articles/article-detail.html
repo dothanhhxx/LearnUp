@@ -1,0 +1,153 @@
+<template id="article-detail-template">
+    <div class="articles-layout article-detail-layout" style="background-color: #fff;">
+        <!-- Header Navigation -->
+        <header class="main-header" style="border-bottom: 1px solid #e2e8f0;">
+            <!-- ← Back | LearnUP brand (matches provided design) -->
+            <div style="display:flex;align-items:center;gap:0;">
+                <button id="detail-back-btn"
+                    style="display:flex;align-items:center;gap:7px;background:none;border:none;cursor:pointer;font-size:14px;font-weight:600;color:#334155;padding:8px 16px 8px 0;transition:color .15s;"
+                    onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#334155'">
+                    <i class="fa-solid fa-arrow-left" style="font-size:13px;"></i> Back
+                </button>
+                <div style="width:1px;height:22px;background:#e2e8f0;margin-right:16px;"></div>
+                <div class="logo" style="cursor:pointer;font-size:15px;gap:8px;" id="detail-logo-home">
+                    <span class="logo-icon" style="width:28px;height:28px;font-size:13px;">
+                        <i class="fa-solid fa-graduation-cap" style="transform:rotate(-45deg);"></i>
+                    </span>
+                    <strong style="font-weight:800;color:#0f172a;">LearnUP</strong>
+                </div>
+            </div>
+
+            <!-- Right actions -->
+            <div style="display:flex;align-items:center;gap:16px;margin-left:auto;">
+                <button class="bookmark-btn" id="detail-bookmark-btn" title="Bookmark article" style="font-size:18px;">
+                    <i class="far fa-bookmark"></i>
+                </button>
+                <div class="user-profile-dropdown">
+                    <div class="user-profile-toggle" title="Account menu">
+                        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;">
+                            <i class="fa-regular fa-user" style="font-size:14px;"></i>
+                        </div>
+                    </div>
+                    <div class="user-dropdown-menu">
+                        <div class="user-dropdown-header">
+                            <span class="user-dropdown-name">User</span>
+                        </div>
+                        <a href="#" class="user-dropdown-item" onclick="animateTransition('user-dashboard'); return false;">
+                            <i class="fa-solid fa-gauge"></i> Dashboard
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area: article + sidebar -->
+        <div class="detail-page-body">
+            <!-- Left: Article Content -->
+            <div class="detail-main-content">
+                <!-- Meta row -->
+                <div class="detail-meta-row" id="detail-meta-row">
+                    <span class="category-tag" id="detail-category-tag">Vocabulary</span>
+                    <span class="detail-meta-item"><i class="fa-regular fa-clock"></i> <span id="detail-read-time">8 min read</span></span>
+                    <span class="detail-meta-item"><i class="fa-solid fa-signal"></i> Difficulty: <span id="detail-difficulty">Intermediate</span></span>
+                </div>
+
+                <h1 class="article-detail-title" id="detail-article-title">Article Title</h1>
+
+                <div class="article-hero-image" id="detail-article-image"></div>
+
+                <div class="article-text-body" id="detail-article-body">
+                    <!-- Content will be injected here -->
+                </div>
+
+                <!-- Quiz CTA -->
+                <div style="margin-top:32px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;display:flex;align-items:center;gap:16px;">
+                    <div style="width:40px;height:40px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                        <i class="fa-solid fa-clipboard-question" style="color:#2563eb;font-size:18px;"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <strong style="font-size:14px;color:#0f172a;">Ready for the quiz?</strong>
+                        <p style="font-size:13px;color:#64748b;margin-top:2px;">Test your understanding of this article</p>
+                    </div>
+                    <button class="btn-primary-sm" id="detail-take-quiz-btn" style="margin-left:0;">Take Quiz</button>
+                </div>
+            </div>
+
+            <!-- Right: Sidebar -->
+            <div class="detail-sidebar" id="detail-sidebar">
+                <!-- Reading Stats -->
+                <div class="detail-sidebar-card">
+                    <h4>Reading Stats</h4>
+                    <div class="sidebar-stat-row">
+                        <span class="stat-name">Progress</span>
+                        <span class="stat-value" id="detail-progress">0%</span>
+                    </div>
+                    <div class="sidebar-stat-row">
+                        <span class="stat-name">Words Read</span>
+                        <span class="stat-value" id="detail-words-read">0 / 0</span>
+                    </div>
+                </div>
+
+                <!-- Reading Tools -->
+                <div class="detail-sidebar-card">
+                    <h4>Reading Tools</h4>
+                    <div class="sidebar-tool-item" id="tool-translate">
+                        <i class="fa-solid fa-language"></i> Translate Page
+                    </div>
+                    <div class="sidebar-tool-item" id="tool-save-vocab">
+                        <i class="fa-regular fa-bookmark"></i> Save Vocab
+                    </div>
+                    <div class="sidebar-tool-item" id="tool-audio">
+                        <i class="fa-solid fa-headphones"></i> Audio Mode
+                    </div>
+                </div>
+
+                <!-- Current Keywords -->
+                <div class="detail-sidebar-card">
+                    <h4>Current Keywords</h4>
+                    <div class="sidebar-keywords" id="detail-keywords">
+                        <!-- Keywords injected dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vocab Popup — hover-controlled, positioned near the hovered word -->
+        <div class="interactive-popup vocab-popup" id="vocab-popup"
+             style="min-width:300px;max-width:360px;">
+            <div class="popup-header-row">
+                <h3 class="popup-word" id="popup-word">Word</h3>
+                <button class="btn-audio" id="popup-audio-btn"><i class="fa-solid fa-volume-high"></i></button>
+            </div>
+            <span class="popup-pronunciation" id="popup-phonetic">/pronunciation/</span>
+
+            <!-- Vietnamese meaning — highlighted section -->
+            <div class="popup-section" style="background:#eff6ff;border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+                <span class="popup-label" style="color:#2563eb;">🇻🇳 NGHĨA TIẾNG VIỆT</span>
+                <p class="popup-text" id="popup-vietnamese" style="color:#1e40af;font-weight:600;font-size:15px;">Đang dịch...</p>
+            </div>
+
+            <div class="popup-section">
+                <span class="popup-label">DEFINITION</span>
+                <p class="popup-text" id="popup-definition">Definition...</p>
+            </div>
+
+            <div class="popup-section">
+                <span class="popup-label">EXAMPLE</span>
+                <p class="popup-text example" id="popup-example">Example...</p>
+            </div>
+
+            <button class="btn-primary-solid w-100 mt-16" id="add-to-vocab-btn">
+                <i class="fa-regular fa-bookmark"></i> Save to Dictionary
+            </button>
+
+            <div class="popup-footer">
+                <span><i class="fa-solid fa-book-open" style="color: #cbd5e1; margin-right: 4px;"></i> ENG VOCAB LEARNER PRO</span>
+            </div>
+        </div>
+    </div>
+</template>

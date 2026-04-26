@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnUP - Master English</title>
+    <meta name="description" content="Learn English through articles, vocabulary, and interactive quizzes.">
+
+    <!-- ===== Modular CSS ===== -->
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/articles.css">
+    <link rel="stylesheet" href="styles/vocabulary.css">
+    <link rel="stylesheet" href="styles/quiz.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="admin/admin.css">
+
+    <!-- Legacy CSS (giữ lại để đảm bảo tương thích, sẽ xóa sau khi verify) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- SPA Root Container -->
+    <div id="app-container" class="app-container">
+        <!-- Views will be injected here by app.js -->
+    </div>
+
+    <!-- User Dashboard Template (kept inline — largest template) -->
+    <template id="user-dashboard-template">
+        <div class="articles-layout dash-layout">
+            <header class="main-header">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-graduation-cap"
+                            style="transform: rotate(-45deg);"></i></span>
+                    LearnUP
+                </div>
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search articles or authors...">
+                </div>
+                <nav class="main-nav">
+                    <a href="#" id="nav-dash-articles">Articles</a>
+                    <a href="#" id="nav-dash-library">Library</a>
+                    <a href="#" id="nav-dash-quiz">Quiz</a>
+                    <a href="#" class="active" id="nav-dash-dashboard">Dashboard</a>
+                </nav>
+                <div class="user-profile-dropdown">
+                    <div class="user-profile-toggle" title="Account menu">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown-menu">
+                        <div class="user-dropdown-header">
+                            <span class="user-dropdown-name">User</span>
+                        </div>
+                        <a href="#" class="user-dropdown-item" onclick="animateTransition('articles'); return false;">
+                            <i class="fa-solid fa-newspaper"></i> Articles
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dash-main-container">
+                <!-- Greeting Area -->
+                <div class="dash-greeting">
+                    <h1 id="dash-greeting-text">Hello, Alex! 👋</h1>
+                    <p id="dash-greeting-sub" style="color: #64748b; font-size: 15px; margin-top: 6px;">You're making
+                        great progress. You've reached <span id="dash-greeting-percent"
+                            style="font-weight: 500; color: #3b82f6;">80%</span> of your daily goal.</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="dash-tabs">
+                    <button class="dash-tab active" data-target="overview">Overview</button>
+                    <button class="dash-tab" data-target="goals">My Goals</button>
+                </div>
+
+                <!-- OVERVIEW TAB -->
+                <div id="dash-view-overview" class="dash-content-view active">
+                    <div class="dash-grid-overview" style="display: grid; grid-template-columns: 320px 1fr; gap: 24px;">
+                        <!-- Left Column -->
+                        <div class="dash-col" style="display: flex; flex-direction: column; gap: 24px;">
+                            <!-- Daily Goal -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>Daily Goal</h3>
+                                    <span class="badge-active">ACTIVE</span>
+                                </div>
+                                <div class="prog-circle-wrapper"
+                                    style="display: flex; justify-content: center; margin: 30px 0;">
+                                    <div style="position: relative; width: 120px; height: 120px;">
+                                        <svg class="prog-ring" width="120" height="120">
+                                            <circle class="prog-ring-bg" cx="60" cy="60" r="50"></circle>
+                                            <circle class="prog-ring-fill" id="overview-daily-circle" cx="60" cy="60"
+                                                r="50" style="stroke-dashoffset: 62.8;"></circle>
+                                        </svg>
+                                        <div class="prog-circle-text"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                            <strong id="overview-daily-percent"
+                                                style="font-size: 24px; color: #0f172a;">80%</strong>
+                                            <span
+                                                style="font-size: 10px; color: #64748b; font-weight: 600; margin-top: 2px;">DONE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prog-circle-desc" style="text-align: center;">
+                                    <strong><span id="overview-daily-current">40</span> / <span
+                                            id="overview-daily-total">50</span> minutes</strong><br>
+                                    <span style="color: #64748b; font-size: 13px; line-height: 1.8;"><span
+                                            id="overview-daily-remain">10</span> more minutes to reach your goal!</span>
+                                </div>
+                            </div>
+                            <!-- Quick Stats -->
+                            <div class="dash-stats-col" style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="dash-stat-item">
+                                    <div class="stat-icon-wrapper text-blue icon-blue-bg"><i
+                                            class="fa-solid fa-language"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">WORDS LEARNED</div>
+                                        <div class="stat-val"><span id="overview-stat-words">—</span> <span
+                                                class="trend-green trend-sm"><i class="fa-solid fa-caret-up"></i> <span
+                                                    id="overview-stat-words-trend">+0 today</span></span></div>
+                                    </div>
+                                </div>
+                                <div class="dash-stat-item">
+                                    <div class="stat-icon-wrapper text-pink" style="background: #fdf2f8;"><i
+                                            class="fa-regular fa-file-lines" style="color: #db2777;"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">QUESTIONS ANSWERED</div>
+                                        <div class="stat-val"><span id="overview-stat-articles">—</span> <span
+                                                class="trend-green trend-sm"><i class="fa-solid fa-caret-up"></i> <span
+                                                    id="overview-stat-art-trend">0% acc.</span></span></div>
+                                    </div>
+                                </div>
+                                <div class="dash-stat-item">
+                                    <div class="stat-icon-wrapper text-orange" style="background: #fff7ed;"><i
+                                            class="fa-solid fa-layer-group" style="color: #ea580c;"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">QUIZ ATTEMPTS</div>
+                                        <div class="stat-val"><span id="overview-stat-cards">—</span> <span
+                                                class="trend-green trend-sm"><i class="fa-solid fa-caret-up"></i> <span
+                                                    id="overview-stat-cards-trend">0% best</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="dash-col" style="display: flex; flex-direction: column;">
+                            <!-- Weekly Progress Chart -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <div>
+                                        <h3>Weekly Progress</h3>
+                                        <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Learning time
+                                            (minutes)</p>
+                                    </div>
+                                    <div class="btn-group-sm">
+                                        <button class="active">Week</button>
+                                        <button>Month</button>
+                                    </div>
+                                </div>
+                                <div class="chart-container" style="height: 250px; margin-top: 24px;">
+                                    <canvas id="weeklyProgressChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Continue Learning -->
+                            <h3 class="section-title"
+                                style="margin-top: 32px; margin-bottom: 16px; font-size: 18px; color: #0f172a;">Continue
+                                Learning</h3>
+                            <div class="continue-grid" id="dash-continue-learning-grid"
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div class="dash-continue-card">
+                                    <div class="continue-tag"><i class="fa-solid fa-book-open"></i> LESSON</div>
+                                    <h4 class="truncate-1">Advanced Business Idioms</h4>
+                                    <p class="text-gray" style="font-size: 13px; margin-top: 8px;">15 mins • 12 new
+                                        words</p>
+                                </div>
+                                <div class="dash-continue-card">
+                                    <div class="continue-tag"><i class="fa-solid fa-headphones"></i> LISTENING</div>
+                                    <h4 class="truncate-1">BBC World News Recap</h4>
+                                    <p class="text-gray" style="font-size: 13px; margin-top: 8px;">8 mins • Audio
+                                        article</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MY GOALS TAB -->
+                <div id="dash-view-goals" class="dash-content-view" style="display: none;">
+                    <div class="dash-grid-goals" style="display: grid; grid-template-columns: 1fr 340px; gap: 24px;">
+                        <!-- Left Column: Goals -->
+                        <div class="dash-col" style="display: flex; flex-direction: column; gap: 20px;">
+                            <!-- Daily Vocab Goal -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <div>
+                                        <h3 style="display: flex; align-items: center; gap: 10px;"><i
+                                                class="fa-solid fa-language text-blue"></i> Daily Vocabulary Goal</h3>
+                                        <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Expand your lexicon
+                                            with 10 new words every day.</p>
+                                    </div>
+                                    <button class="btn-sm btn-outline" id="edit-vocab-goal-btn"><i class="fa-solid fa-pen"></i> Edit Goal</button>
+                                </div>
+                                <div class="goal-progress-section" style="margin-top: 28px;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+                                        <div style="font-size: 32px; font-weight: 700; color: #0f172a; line-height: 1;">
+                                            <span id="goal-vocab-current">7</span> <span
+                                                style="font-size: 16px; color: #64748b; font-weight: 500;">/ <span
+                                                    id="goal-vocab-total">10</span> words</span>
+                                        </div>
+                                        <span class="text-blue"
+                                            style="font-weight: 600; font-size: 14px; background: #eff6ff; padding: 4px 12px; border-radius: 12px;"
+                                            id="goal-vocab-percent-text">70% Complete</span>
+                                    </div>
+                                    <div class="progress-bar-bg"
+                                        style="height: 12px; background: #f1f5f9; border-radius: 6px; overflow: hidden;">
+                                        <div class="progress-bar-fill" id="goal-vocab-bar"
+                                            style="height: 100%; background: #2563eb; width: 70%; border-radius: 6px; transition: width 0.5s ease;">
+                                        </div>
+                                    </div>
+                                    <p style="color: #64748b; font-size: 14px; margin-top: 16px;"><i
+                                            class="fa-regular fa-clock" style="margin-right: 4px;"></i> <span
+                                            id="goal-vocab-remain">3</span> more words to reach your target for today!
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Weekly Reading Goal -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <div>
+                                        <h3 style="display: flex; align-items: center; gap: 10px;"><i
+                                                class="fa-regular fa-file-lines text-blue"></i> Weekly Reading Goal</h3>
+                                        <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Improve
+                                            comprehension by reading 5 articles a week.</p>
+                                    </div>
+                                    <button class="btn-sm btn-outline" id="edit-reading-goal-btn"><i class="fa-solid fa-pen"></i> Edit Goal</button>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 32px; margin-top: 32px;">
+                                    <div class="prog-circle-wrapper"
+                                        style="width: 90px; height: 90px; position: relative;">
+                                        <svg class="prog-ring" width="90" height="90">
+                                            <circle class="prog-ring-bg" cx="45" cy="45" r="38" stroke-width="8"
+                                                stroke="#f1f5f9" fill="transparent"></circle>
+                                            <circle class="prog-ring-fill" cx="45" cy="45" r="38" stroke-width="8"
+                                                stroke="#2563eb" fill="transparent" stroke-dasharray="238.7"
+                                                style="stroke-dashoffset: 143.2;" id="goal-reading-circle"></circle>
+                                        </svg>
+                                        <div class="prog-circle-text"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                            <strong style="font-size: 20px; color: #0f172a;"><span
+                                                    id="goal-reading-current">2</span>/<span
+                                                    id="goal-reading-total">5</span></strong>
+                                            <span style="font-size: 10px; color: #64748b; font-weight: 600;">DONE</span>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div class="step-dots" style="display: flex; gap: 8px; margin-bottom: 16px;"
+                                            id="reading-step-dots">
+                                            <div class="step-dot completed"><i class="fa-solid fa-check"></i></div>
+                                            <div class="step-dot completed"><i class="fa-solid fa-check"></i></div>
+                                            <div class="step-dot"><i class="fa-solid fa-minus"></i></div>
+                                            <div class="step-dot"><i class="fa-solid fa-minus"></i></div>
+                                            <div class="step-dot"><i class="fa-solid fa-minus"></i></div>
+                                        </div>
+                                        <p style="color: #475569; font-size: 14px; line-height: 1.6;">You've completed
+                                            <strong id="goal-reading-percent-text">40%</strong> of your weekly reading
+                                            task. The week ends in <strong>3 days</strong>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Sidebar -->
+                        <div class="dash-col" style="display: flex; flex-direction: column; gap: 20px;">
+                            <div class="dash-card bg-light-blue"
+                                style="background: #f0fdfa; border: 1px solid #ccfbf1; padding: 20px;">
+                                <h4
+                                    style="color: #0d9488; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                                    Weekly Tip</h4>
+                                <p style="color: #0f172a; font-size: 14px; line-height: 1.6;">Reading out loud helps
+                                    improve your pronunciation and confidence simultaneously.</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div class="dash-card flex-1"
+                                    style="display: flex; align-items: center; gap: 16px; padding: 16px; cursor: pointer; transition: transform 0.2s;">
+                                    <div class="stat-icon-wrapper text-green icon-green-bg"
+                                        style="width: 42px; height: 42px; border-radius: 8px; font-size: 18px;"><i
+                                            class="fa-solid fa-microphone"></i></div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span
+                                            style="font-size: 11px; color: #64748b; font-weight: 600; letter-spacing: 0.5px;">OPTIONAL</span>
+                                        <strong style="font-size: 14px; color: #0f172a;">Speaking Practice</strong>
+                                    </div>
+                                </div>
+                                <div class="dash-card flex-1"
+                                    style="display: flex; align-items: center; gap: 16px; padding: 16px; cursor: pointer; transition: transform 0.2s;">
+                                    <div class="stat-icon-wrapper text-orange"
+                                        style="background: #fff7ed; width: 42px; height: 42px; border-radius: 8px; color: #ea580c; font-size: 18px;">
+                                        <i class="fa-regular fa-calendar-check"></i>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span
+                                            style="font-size: 11px; color: #64748b; font-weight: 600; letter-spacing: 0.5px;">WEEKEND</span>
+                                        <strong style="font-size: 14px; color: #0f172a;">Review Quiz</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="full-footer"
+                style="margin-top: auto; border-radius: 0; padding: 24px 48px; border-top: 1px solid #e2e8f0;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="logo-icon logo-icon-sm" style="margin: 0;"><i class="fa-solid fa-graduation-cap"
+                            style="transform: rotate(-45deg);"></i></span>
+                    <strong style="color: #0f172a;">LearnUP</strong>
+                </div>
+                <div>© 2026 LearnUP. All rights reserved.</div>
+                <div class="footer-links">
+                    <span style="color: #94a3b8; font-size: 12px; letter-spacing: 1px; font-weight: 600;">FOCUS •
+                        CONSISTENCY • FLUENCY</span>
+                </div>
+            </footer>
+        </div>
+    </template>
+
+    <!-- ===== Modular JS – Load Order Matters ===== -->
+    <!-- 1. Utils (no dependencies) -->
+    <script src="utils/state.js"></script>
+    <script src="utils/helpers.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/router.js"></script>
+
+    <!-- 2. Services (depend on utils) -->
+    <script src="services/api.js"></script>
+    <script src="services/auth-service.js"></script>
+    <script src="services/article-service.js"></script>
+    <script src="services/vocabulary-service.js"></script>
+
+    <!-- 3. Components (depend on utils + services) -->
+    <script src="components/header.js"></script>
+    <script src="components/pagination.js"></script>
+    <script src="components/article-card.js"></script>
+
+    <!-- 4. Pages (depend on everything above) -->
+    <script src="pages/auth/login.js"></script>
+    <script src="pages/auth/register.js"></script>
+    <script src="pages/articles/articles-list.js"></script>
+    <script src="pages/articles/article-detail.js"></script>
+    <script src="pages/vocabulary/vocabulary.js"></script>
+    <script src="pages/quiz/quiz.js"></script>
+
+    <!-- 5. Admin -->
+    <script src="admin/admin.js"></script>
+
+    <!-- 6. Main App (bootstrapper – loads last) -->
+    <script src="app.js"></script>
+</body>
+
+</html>

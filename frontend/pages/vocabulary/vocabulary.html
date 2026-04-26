@@ -1,0 +1,87 @@
+<template id="vocabulary-template">
+    <div class="articles-layout vocabulary-layout">
+        <!-- Header Navigation -->
+        <header class="main-header">
+            <div class="logo" style="cursor: pointer;" id="vocab-to-articles">
+                <span class="logo-icon"><i class="fa-solid fa-graduation-cap"
+                        style="transform: rotate(-45deg);"></i></span>
+                LearnUP
+            </div>
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search saved words...">
+            </div>
+            <nav class="main-nav">
+                <a href="#" id="nav-vocab-articles">Articles</a>
+                <a href="#" class="active" id="nav-vocab-library">Library</a>
+                <a href="#" id="nav-vocab-quiz">Quiz</a>
+                <a href="#" id="nav-vocab-dashboard">Dashboard</a>
+            </nav>
+            <div class="user-profile-dropdown">
+                <div class="user-profile-toggle" title="Account menu">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar">
+                </div>
+                <div class="user-dropdown-menu">
+                    <div class="user-dropdown-header">
+                        <span class="user-dropdown-name">User</span>
+                    </div>
+                    <a href="#" class="user-dropdown-item" onclick="animateTransition('user-dashboard'); return false;">
+                        <i class="fa-solid fa-gauge"></i> Dashboard
+                    </a>
+                    <div class="user-dropdown-divider"></div>
+                    <a href="#" class="user-dropdown-item logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Back navigation -->
+        <div class="back-nav-bar">
+            <button class="back-nav-link" id="vocab-back-to-articles">
+                <i class="fa-solid fa-arrow-left"></i> Back to Articles
+            </button>
+        </div>
+
+        <div class="page-body" style="background-color: #f7f9fc;">
+            <main class="content-area vocab-content">
+                <div class="vocab-header">
+                    <div class="vocab-title">
+                        <h1>My Vocabulary</h1>
+                        <p>Curate and master your personal word collection</p>
+                    </div>
+                </div>
+
+                <div class="vocab-controls">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="vocab-search" placeholder="Search within your saved words...">
+                    </div>
+                </div>
+
+                <div class="vocab-table-container">
+                    <table class="vocab-table">
+                        <thead>
+                            <tr>
+                                <th>WORD</th>
+                                <th>MEANING</th>
+                                <th>EXAMPLE SENTENCE</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vocab-tbody">
+                            <!-- Rows will be injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span class="showing-text" id="vocab-showing-text">Showing words</span>
+                    <div class="pagination" id="vocab-pagination">
+                        <!-- Pagination will be injected dynamically -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</template>

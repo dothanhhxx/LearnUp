@@ -1,0 +1,155 @@
+<template id="articles-template">
+    <div class="articles-layout">
+        <!-- Header Navigation -->
+        <header class="main-header">
+            <div class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-graduation-cap"
+                        style="transform: rotate(-45deg);"></i></span>
+                LearnUP
+            </div>
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search articles..." id="articles-search-input">
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="active" id="nav-articles-articles">Articles</a>
+                <a href="#" id="nav-articles-library">Library</a>
+                <a href="#" id="nav-articles-quiz">Quiz</a>
+                <a href="#" id="nav-articles-dashboard">Dashboard</a>
+            </nav>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <button class="saved-articles-toggle" id="saved-articles-toggle" title="View saved articles"
+                    style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;transition:all 0.2s;">
+                    <i class="far fa-bookmark"></i> Saved
+                </button>
+                <div class="user-profile-dropdown">
+                    <div class="user-profile-toggle" title="Account menu">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown-menu">
+                        <div class="user-dropdown-header">
+                            <span class="user-dropdown-name">User</span>
+                        </div>
+                        <a href="#" class="user-dropdown-item" onclick="animateTransition('user-dashboard'); return false;">
+                            <i class="fa-solid fa-gauge"></i> Dashboard
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-body">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar-filters">
+                <div class="filter-header">
+                    <h2>Filters</h2>
+                    <button class="btn-text" id="reset-filters-btn">Reset All</button>
+                </div>
+
+                <div class="filter-section">
+                    <h3>TOPICS</h3>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" value="Sport">
+                        <span class="checkmark"></span>
+                        Sport
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" value="Business">
+                        <span class="checkmark"></span>
+                        Business
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" value="Culture">
+                        <span class="checkmark"></span>
+                        Culture
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" value="Science">
+                        <span class="checkmark"></span>
+                        Science
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" value="Lifestyle">
+                        <span class="checkmark"></span>
+                        Lifestyle
+                    </label>
+                    <i class="fa-solid fa-chevron-down expand-icon"></i>
+                </div>
+
+                <div class="filter-section">
+                    <h3>DIFFICULTY LEVEL</h3>
+                    <label class="custom-radio">
+                        <input type="radio" name="difficulty" value="Beginner">
+                        <span class="radiomark"></span>
+                        Beginner
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="difficulty" value="Intermediate">
+                        <span class="radiomark"></span>
+                        Intermediate
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="difficulty" value="Advanced">
+                        <span class="radiomark"></span>
+                        Advanced
+                    </label>
+                </div>
+
+                <button class="btn-primary w-100 apply-btn" id="apply-filters-btn" style="margin-top: auto; margin-bottom: 20px;">Apply
+                    Filters</button>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="content-header">
+                    <div class="discover-texts">
+                        <h1 id="discover-title">Discover</h1>
+                        <p>Showing articles based on your interests</p>
+                    </div>
+                    <div class="view-toggles">
+                        <button class="active"><i class="fa-solid fa-grip"></i></button>
+                        <button><i class="fa-solid fa-bars"></i></button>
+                    </div>
+                </div>
+
+                <!-- Active tags display area -->
+                <div class="active-filters" id="active-filters-bar" style="display: none;">
+                    <span class="filter-label">ACTIVE:</span>
+                    <div id="active-tags-container" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                </div>
+
+                <div class="articles-grid" id="articles-grid">
+                    <!-- Articles loaded dynamically from API -->
+                    <div class="loading-message" id="articles-loading"
+                        style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #94a3b8;">
+                        <i class="fa-solid fa-spinner fa-spin"
+                            style="font-size: 32px; margin-bottom: 16px; display: block;"></i>
+                        Loading articles...
+                    </div>
+                </div>
+
+                <div class="pagination-wrapper">
+                    <span class="pagination-info" id="pagination-info"></span>
+                    <div class="pagination" id="articles-pagination">
+                        <!-- Pagination buttons rendered dynamically -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="full-footer"
+            style="margin-top: auto; border-radius: 0; padding: 24px 48px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="logo-icon logo-icon-sm" style="margin: 0;"><i class="fa-solid fa-graduation-cap"
+                        style="transform: rotate(-45deg);"></i></span>
+                <strong style="color: #0f172a;">LearnUP</strong>
+            </div>
+            <div>© 2026 LearnUP. All rights reserved.</div>
+            <div class="footer-links"></div>
+        </footer>
+    </div>
+</template>

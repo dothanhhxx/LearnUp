@@ -1,0 +1,194 @@
+/* =========================================================================
+   Admin Panel Styles
+   ========================================================================= */
+
+/* ── Modals ──────────────────────────────────────────────────────────────── */
+.admin-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.admin-modal-overlay.show {
+    display: flex;
+}
+
+.admin-modal-box {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    animation: adminModalIn 0.2s ease;
+}
+
+.admin-modal-sm {
+    max-width: 440px;
+}
+
+@keyframes adminModalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(-12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.admin-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-modal-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.admin-modal-close {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+}
+
+.admin-modal-close:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.admin-modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.admin-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* ── Form Fields ─────────────────────────────────────────────────────────── */
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.admin-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.3px;
+}
+
+.admin-form-group .required {
+    color: #ef4444;
+}
+
+.admin-form-group input[type="text"],
+.admin-form-group textarea {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #0f172a;
+    font-family: inherit;
+    background: #f8fafc;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    resize: vertical;
+}
+
+.admin-form-group input[type="text"]:focus,
+.admin-form-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ── Tag Picker ──────────────────────────────────────────────────────────── */
+.admin-tags-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+    min-height: 42px;
+}
+
+.admin-tag-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #475569;
+    background: #fff;
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.admin-tag-checkbox:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.admin-tag-checkbox input[type="checkbox"] {
+    accent-color: #3b82f6;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.admin-tag-checkbox:has(input:checked) {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+/* ── Delete Button Color ─────────────────────────────────────────────────── */
+.action-icon.text-red {
+    color: #94a3b8;
+}
+.action-icon.text-red:hover {
+    color: #ef4444;
+    background: #fef2f2;
+}
+
+/* ── Toast Animation ─────────────────────────────────────────────────────── */
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
