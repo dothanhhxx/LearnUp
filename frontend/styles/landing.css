@@ -1,0 +1,607 @@
+/* =========================================================================
+   Landing Page — all rules scoped under .landing-page
+   Prevents interference with other pages in the SPA
+   ========================================================================= */
+
+/* ── Local CSS variables (scoped, won't bleed) ── */
+.landing-page {
+    --lp-blue: #2563EB;
+    --lp-blue-soft: #EEF4FF;
+    --lp-blue-mid: #BFCFFA;
+    --lp-yellow: #FFF3B0;
+    --lp-line: rgba(37, 99, 235, 0.12);
+    --lp-text: #18182B;
+    --lp-sub: #5A5F7A;
+    --lp-hint: #9EA5C0;
+    --lp-glass: rgba(255, 255, 255, 0.55);
+    --lp-glass-border: rgba(255, 255, 255, 0.75);
+
+    font-family: 'DM Sans', sans-serif;
+    color: var(--lp-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse 70% 50% at 15% 10%, rgba(191, 207, 250, 0.45) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 90% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 60% at 50% 85%, rgba(191, 207, 250, 0.3) 0%, transparent 65%),
+        #F0F5FF;
+    background-attachment: fixed;
+}
+
+.landing-page a {
+    text-decoration: none
+}
+
+/* ── Wrap ── */
+.landing-page .wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 28px
+}
+
+/* ── NAV ── */
+.landing-page nav {
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 940px;
+    margin: 0 auto
+}
+
+.landing-page .logo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--lp-text)
+}
+
+.landing-page .logo span {
+    color: var(--lp-blue)
+}
+
+.landing-page .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none
+}
+
+.landing-page .nav-links a {
+    font-size: 14px;
+    color: var(--lp-sub);
+    font-weight: 500
+}
+
+.landing-page .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.landing-page .btn-login {
+    background: var(--lp-glass);
+    color: var(--lp-text);
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    border: 1.5px solid var(--lp-glass-border);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: background 0.2s
+}
+
+.landing-page .btn-login:hover {
+    background: rgba(255, 255, 255, 0.8)
+}
+
+.landing-page .nav-pill {
+    background: var(--lp-blue);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.2s
+}
+
+.landing-page .nav-pill:hover {
+    opacity: 0.9
+}
+
+/* ── HERO ── */
+.landing-page .hero {
+    padding: 60px 0 48px;
+    text-align: center
+}
+
+.landing-page .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--lp-glass);
+    border: 1.5px solid var(--lp-glass-border);
+    border-radius: 100px;
+    padding: 6px 16px 6px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lp-sub);
+    margin-bottom: 32px;
+    backdrop-filter: blur(10px)
+}
+
+.landing-page .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lp-blue);
+    display: inline-block
+}
+
+.landing-page .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 58px;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    color: var(--lp-text);
+    max-width: 660px;
+    margin: 0 auto 22px
+}
+
+.landing-page .hero h1 .hl {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap
+}
+
+.landing-page .hero h1 .hl::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: 2px;
+    height: 14px;
+    background: var(--lp-yellow);
+    border-radius: 4px;
+    z-index: -1
+}
+
+.landing-page .hero p {
+    font-size: 17px;
+    color: var(--lp-sub);
+    max-width: 440px;
+    margin: 0 auto 40px;
+    line-height: 1.75
+}
+
+.landing-page .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 52px
+}
+
+.landing-page .btn-blue {
+    background: var(--lp-blue);
+    color: #fff;
+    padding: 15px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    transition: opacity 0.2s
+}
+
+.landing-page .btn-blue:hover {
+    opacity: 0.88
+}
+
+.landing-page .btn-ghost {
+    background: var(--lp-glass);
+    color: var(--lp-text);
+    padding: 15px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    border: 1.5px solid var(--lp-glass-border);
+    backdrop-filter: blur(10px);
+    transition: background 0.2s
+}
+
+.landing-page .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.8)
+}
+
+/* ── WORD CARDS ── */
+.landing-page .preview {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 64px
+}
+
+.landing-page .word-card {
+    background: var(--lp-glass);
+    border: 1.5px solid var(--lp-glass-border);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    backdrop-filter: blur(12px)
+}
+
+.landing-page .word-card.featured {
+    background: var(--lp-blue);
+    border-color: var(--lp-blue)
+}
+
+.landing-page .wc-word {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--lp-text)
+}
+
+.landing-page .word-card.featured .wc-word {
+    color: #fff
+}
+
+.landing-page .wc-def {
+    font-size: 12px;
+    color: var(--lp-hint);
+    max-width: 160px;
+    line-height: 1.4
+}
+
+.landing-page .word-card.featured .wc-def {
+    color: rgba(255, 255, 255, 0.65)
+}
+
+.landing-page .wc-tag {
+    background: var(--lp-blue-soft);
+    color: var(--lp-blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'Nunito', sans-serif;
+    white-space: nowrap
+}
+
+.landing-page .word-card.featured .wc-tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff
+}
+
+/* ── TRUST ROW ── */
+.landing-page .trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(37, 99, 235, 0.15);
+    border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+    margin-bottom: 72px;
+    flex-wrap: wrap
+}
+
+.landing-page .trust-item {
+    text-align: center
+}
+
+.landing-page .trust-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--lp-text)
+}
+
+.landing-page .trust-label {
+    font-size: 12px;
+    color: var(--lp-hint);
+    font-weight: 500;
+    margin-top: 2px
+}
+
+.landing-page .trust-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(37, 99, 235, 0.15)
+}
+
+/* ── SECTION HEADERS ── */
+.landing-page .section-block {
+    margin-bottom: 80px
+}
+
+.landing-page .section-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--lp-blue);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-family: 'Nunito', sans-serif;
+    background: var(--lp-blue-soft);
+    padding: 4px 12px;
+    border-radius: 8px
+}
+
+.landing-page .section-heading {
+    font-family: 'Nunito', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--lp-text);
+    line-height: 1.12;
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 20px
+}
+
+.landing-page .section-heading::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 5px;
+    background: var(--lp-blue);
+    border-radius: 4px
+}
+
+/* ── FEATURE CARDS ── */
+.landing-page .feat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+}
+
+.landing-page .feat {
+    border-radius: 20px;
+    padding: 28px 28px 32px;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07)
+}
+
+.landing-page .feat.white-card {
+    background: #FFFFFF
+}
+
+.landing-page .feat.blue-card {
+    background: #DDEAFF;
+    border-color: #C4D8FF
+}
+
+.landing-page .feat-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--lp-blue);
+    background: var(--lp-blue-soft);
+    border-radius: 8px;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+    font-family: 'Nunito', sans-serif
+}
+
+.landing-page .feat.blue-card .feat-tag {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--lp-blue)
+}
+
+.landing-page .feat h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--lp-text);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px
+}
+
+.landing-page .feat p {
+    font-size: 14px;
+    color: var(--lp-sub);
+    line-height: 1.7
+}
+
+/* ── HOW IT WORKS ── */
+.landing-page .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px
+}
+
+.landing-page .step {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 2px 16px rgba(37, 99, 235, 0.07)
+}
+
+.landing-page .step-n {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    color: var(--lp-blue-mid);
+    line-height: 1;
+    margin-bottom: 16px
+}
+
+.landing-page .step h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--lp-text);
+    margin-bottom: 8px
+}
+
+.landing-page .step p {
+    font-size: 14px;
+    color: var(--lp-sub);
+    line-height: 1.65
+}
+
+/* ── TOPICS ── */
+.landing-page .topics-section {
+    background: var(--lp-glass);
+    border: 1.5px solid var(--lp-glass-border);
+    border-radius: 24px;
+    padding: 44px;
+    margin-bottom: 80px;
+    backdrop-filter: blur(12px)
+}
+
+.landing-page .topics-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px
+}
+
+.landing-page .topic {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid var(--lp-glass-border);
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lp-sub);
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: all 0.15s
+}
+
+.landing-page .topic:hover {
+    background: rgba(255, 255, 255, 0.85)
+}
+
+.landing-page .topic.on {
+    background: var(--lp-blue);
+    border-color: var(--lp-blue);
+    color: #fff
+}
+
+.landing-page .topic.other {
+    border-style: dashed;
+    border-color: var(--lp-hint);
+    color: var(--lp-hint);
+    font-style: italic;
+    background: transparent
+}
+
+/* ── CTA BLOCK ── */
+.landing-page .cta-block {
+    background: var(--lp-blue);
+    border-radius: 28px;
+    padding: 60px 44px;
+    text-align: center;
+    margin-bottom: 56px
+}
+
+.landing-page .cta-block h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+    line-height: 1.15
+}
+
+.landing-page .cta-block p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 36px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7
+}
+
+.landing-page .btn-white {
+    background: #fff;
+    color: var(--lp-blue);
+    padding: 15px 34px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    transition: opacity 0.2s;
+    cursor: pointer
+}
+
+.landing-page .btn-white:hover {
+    opacity: 0.9
+}
+
+.landing-page .cta-note {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 16px
+}
+
+/* ── FOOTER ── */
+.landing-page footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0 8px;
+    border-top: 1px solid rgba(37, 99, 235, 0.12);
+    font-size: 13px;
+    color: var(--lp-hint)
+}
+
+.landing-page footer a {
+    color: var(--lp-hint);
+    margin-left: 20px
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .landing-page .hero h1 {
+        font-size: 38px;
+        letter-spacing: -0.5px
+    }
+
+    .landing-page .feat-grid {
+        grid-template-columns: 1fr
+    }
+
+    .landing-page .steps {
+        grid-template-columns: 1fr
+    }
+
+    .landing-page .nav-links {
+        display: none
+    }
+
+    .landing-page .section-heading {
+        font-size: 28px
+    }
+
+    .landing-page .topics-section {
+        padding: 28px 20px
+    }
+
+    .landing-page .cta-block {
+        padding: 40px 24px
+    }
+
+    .landing-page .cta-block h2 {
+        font-size: 28px
+    }
+}

@@ -1033,6 +1033,7 @@ body {
 .card-img-wrapper {
     height: 200px;
     width: 100%;
+    position: relative;
 }
 
 .card-img-wrapper img {
@@ -1041,11 +1042,43 @@ body {
     object-fit: cover;
 }
 
+/* Modern Difficulty Badge */
+.difficulty-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #ffffff;
+    z-index: 2;
+}
+
+.difficulty-beginner {
+    background: rgba(22, 163, 74, 0.85);
+}
+
+.difficulty-intermediate {
+    background: rgba(217, 119, 6, 0.85);
+}
+
+.difficulty-advanced {
+    background: rgba(220, 38, 38, 0.85);
+}
+
 .card-content {
     padding: 24px;
     display: flex;
     flex-direction: column;
     flex: 1;
+    border-top: 1px solid #e2e8f0;
 }
 
 .category-tag {
@@ -1681,15 +1714,15 @@ body {
     background-color: #eff6ff;
 }
 
-/* Interactive Popups */
+/* Interactive Popups — position:fixed so JS viewport coords (getBoundingClientRect) work correctly */
 .interactive-popup {
-    position: absolute;
+    position: fixed;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     border: 1px solid #e2e8f0;
     padding: 24px;
-    z-index: 1000;
+    z-index: 9999;
     width: 340px;
     opacity: 0;
     pointer-events: none;

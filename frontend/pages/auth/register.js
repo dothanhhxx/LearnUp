@@ -77,4 +77,13 @@ function attachRegisterEvents() {
             }
         });
     }
+
+    // Logo click -> landing page
+    const registerLogo = document.querySelector('.top-bar .logo');
+    if (registerLogo) {
+        registerLogo.style.cursor = 'pointer';
+        registerLogo.addEventListener('click', () => {
+            animateTransition('landing');
+        });
+    }
 }

@@ -7,6 +7,7 @@
  * Template paths cho lazy loading
  */
 const TEMPLATE_PATHS = [
+    'pages/landing/landing-page.html',
     'pages/auth/login.html',
     'pages/auth/register.html',
     'pages/articles/articles-list.html',
@@ -79,6 +80,7 @@ function renderApp() {
 
     // Map view names to template IDs and event handlers
     const viewConfig = {
+        'landing':          { templateId: 'landing-template',         events: attachLandingEvents },
         'login':            { templateId: 'login-template',          events: attachLoginEvents },
         'register':         { templateId: 'register-template',       events: attachRegisterEvents },
         'articles':         { templateId: 'articles-template',       events: attachArticlesEvents },
@@ -627,8 +629,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Restore to admin panel if user is an admin
         AppState.currentView = AppState.user?.role === 'admin' ? 'admin-articles' : 'articles';
     } else {
-        // Force login view — clear any stale state
-        AppState.currentView = 'login';
+        // Show landing page for unauthenticated users
+        AppState.currentView = 'landing';
     }
 
     // Initial render

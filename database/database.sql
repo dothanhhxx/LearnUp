@@ -86,6 +86,10 @@ CREATE TABLE vocabularies (
     user_id INT, -- Người học từ
     word VARCHAR(255) NOT NULL, -- Từ vựng
     article_id VARCHAR(36), -- Lấy từ bài viết nào
+    phonetic VARCHAR(255),
+    definition TEXT,
+    example TEXT,
+    vietnamese TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     -- → Xóa user → xóa vocab của user

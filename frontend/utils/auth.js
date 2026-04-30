@@ -52,7 +52,7 @@ function loadUser() {
 function logout() {
     removeToken();
     AppState.user = null;
-    AppState.currentView = 'login';
+    AppState.currentView = 'landing';
     renderApp();
 }
 
