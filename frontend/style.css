@@ -601,6 +601,7 @@ body {
         opacity: 0;
         transform: translateY(-8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2171,4 +2172,48 @@ body {
     background: #2563eb;
     border: 1px solid #2563eb;
     color: white;
+}
+
+/* ========================================================================= */
+/* Fix Article Detail Page Mobile Layout */
+/* ========================================================================= */
+@media (max-width: 900px) {
+    .detail-page-body {
+        flex-direction: column;
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .detail-sidebar {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .detail-main-content {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-page-body {
+        padding: 16px;
+        padding-bottom: 80px;
+        /* Space for the bottom nav */
+    }
+
+    .article-hero-image {
+        height: 200px;
+        margin-bottom: 24px;
+    }
+
+    .article-detail-title {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .article-detail-subtitle {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
 }

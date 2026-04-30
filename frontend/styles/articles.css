@@ -279,7 +279,27 @@
 
 @media (max-width: 768px) {
     .articles-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
+    }
+
+    .articles-grid.list-view .article-card {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .articles-grid.list-view .card-img-wrapper {
+        width: 100%;
+        min-width: 100%;
+        height: 200px;
+    }
+
+    .article-hero-image {
+        height: 200px;
+        margin-bottom: 32px;
+    }
+
+    .article-detail-title {
+        font-size: 28px;
     }
 }
 
@@ -379,17 +399,19 @@
     position: fixed;
     background: #ffffff;
     border-radius: 14px;
-    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0,0,0,.08);
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, .08);
     border: 1px solid #e2e8f0;
     padding: 24px;
     z-index: 9999;
-    width: 340px;
+    width: 90vw;
+    max-width: 340px;
     /* Hidden state: invisible + no pointer-events so it doesn't block words */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.18s ease, transform 0.18s ease;
     transform: translateY(6px);
-    display: block;           /* always in layout; visibility controlled by opacity */
+    display: block;
+    /* always in layout; visibility controlled by opacity */
 }
 
 /* Visible state toggled by JS via .show class */
@@ -407,13 +429,27 @@
 }
 
 @keyframes popupIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes toastIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 .popup-close {

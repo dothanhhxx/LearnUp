@@ -35,6 +35,9 @@
     padding: 8px 16px;
     border-radius: 6px;
     transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .main-nav a:hover {
@@ -276,6 +279,24 @@
     width: 100%;
 }
 
+.dash-grid-overview {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+}
+
+.continue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.dash-grid-goals {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+}
+
 .dash-greeting {
     margin-bottom: 32px;
 }
@@ -352,19 +373,78 @@
     .sidebar-footer {
         display: none;
     }
+
+    .dash-grid-overview,
+    .dash-grid-goals {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-main-container {
+        padding: 24px;
+    }
 }
 
 @media (max-width: 768px) {
     .main-header {
-        padding: 16px 24px;
+        padding: 12px 16px;
     }
 
-    .main-nav,
     .search-bar {
         display: none;
     }
 
-    .content-area {
-        padding: 24px;
+    .content-area,
+    .dash-main-container {
+        padding: 16px;
+    }
+
+    .continue-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Bottom Navigation for Mobile */
+    .main-wrapper,
+    .dash-layout {
+        padding-bottom: 70px;
+        /* Space for bottom nav */
+    }
+
+    .main-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        justify-content: space-around;
+        padding: 8px 0;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        gap: 0;
+    }
+
+    .main-nav a {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px;
+        font-size: 11px;
+        border-radius: 8px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .main-nav a i {
+        font-size: 20px;
+    }
+
+    .main-nav a.active {
+        color: #2563eb;
+        background-color: transparent;
+    }
+
+    .main-nav a:hover {
+        background-color: #f8fafc;
     }
 }
