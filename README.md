@@ -19,7 +19,7 @@ Hệ thống cung cấp đầy đủ các tính năng cần thiết cho một n�
 ## 🗺 Sơ đồ Use Case
 Dưới đây là sơ đồ tổng quan về các chức năng và tương tác của người dùng với hệ thống:
 
-![Sơ đồ Use Case Tổng Quan](images/usecase_diagram.png)
+![Sơ đồ Use Case Tổng Quan] (Test)(images/usecase_diagram.png)
 
 ## 🛠 Công nghệ sử dụng
 Dự án được xây dựng theo mô hình Client-Server với các công nghệ tiên tiến:
