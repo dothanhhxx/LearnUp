@@ -16,10 +16,10 @@ Hệ thống cung cấp đầy đủ các tính năng cần thiết cho một n�
 - **📝 Quản lý Câu hỏi & Trả lời:** API tạo và quản lý câu hỏi, bài tập, cũng như theo dõi câu trả lời của học viên.
 - **🔐 Bảo mật:** Xác thực người dùng an toàn bằng JWT và mã hóa mật khẩu bằng bcrypt. Hỗ trợ chức năng cấp lại mật khẩu qua email.
 
-## 🗺 Sơ đồ Use Case
+## 🗺 Sơ đồ Use Case (Demo PNG)
 Dưới đây là sơ đồ tổng quan về các chức năng và tương tác của người dùng với hệ thống:
 
-![Sơ đồ Use Case Tổng Quan] (Test)(images/usecase_diagram.png)
+![Sơ đồ Use Case Tổng Quan](images/usecase_diagram.png)
 
 ## 🛠 Công nghệ sử dụng
 Dự án được xây dựng theo mô hình Client-Server với các công nghệ tiên tiến:
