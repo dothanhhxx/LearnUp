@@ -6,7 +6,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from routers import articles, users, tags, vocabulary, upload
+from routers import articles, users, tags, vocabulary, upload, chatbot
 from config.settings import APP_HOST, APP_PORT
 
 app = FastAPI(
@@ -36,6 +36,7 @@ app.include_router(articles.router)
 app.include_router(tags.router)
 app.include_router(vocabulary.router)
 app.include_router(upload.router)
+app.include_router(chatbot.router)
 
 
 # ===== Health Check =====

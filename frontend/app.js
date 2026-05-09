@@ -131,6 +131,11 @@ function renderApp() {
     if (PROTECTED_VIEWS.includes(AppState.currentView)) {
         attachUserDropdownEvents();
     }
+
+    // Ensure chatbot visibility is updated when view changes
+    if (window.learnUpChatbot) {
+        window.learnUpChatbot.checkVisibility();
+    }
 }
 
 /**
@@ -631,6 +636,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         // Show landing page for unauthenticated users
         AppState.currentView = 'landing';
+    }
+
+    // Initialize Chatbot UI
+    if (typeof initChatbot === 'function') {
+        initChatbot();
     }
 
     // Initial render

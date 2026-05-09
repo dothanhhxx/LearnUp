@@ -125,3 +125,22 @@ def delete(conn, article_id: str) -> bool:
         return cursor.rowcount > 0
     finally:
         cursor.close()
+
+def search_articles(conn, keyword: str, limit: int = 3) -> List[Dict]:
+    """Tìm kiếm article dựa trên từ khóa ở title hoặc nội dung (phục vụ AI Chatbot)."""
+    cursor = conn.cursor(dictionary=True)
+    try:
+        search_term = f"%{keyword}%"
+        cursor.execute("""
+            SELECT a.id, a.title, a.difficulty,
+                   GROUP_CONCAT(t.name) AS tags
+            FROM articles a
+            LEFT JOIN article_tags at2 ON a.id = at2.article_id
+            LEFT JOIN tags t ON at2.tag_id = t.id
+            WHERE a.title LIKE %s OR a.content LIKE %s
+            GROUP BY a.id
+            LIMIT %s
+        """, (search_term, search_term, limit))
+        return cursor.fetchall()
+    finally:
+        cursor.close()
