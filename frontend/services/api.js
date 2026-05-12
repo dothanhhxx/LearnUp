@@ -1,6 +1,8 @@
 /**
  * API Service — Base URL & Fetch Wrapper
  */
+// Đã cập nhật link Render thật sau khi deploy thành công
+const PRODUCTION_API_URL = 'https://learnup-p91u.onrender.com';
 
 const API_BASE_URL =
     (window.location.hostname === 'localhost' ||
