@@ -70,7 +70,7 @@ class ChatbotService:
                 tools.append(search_articles_in_db)
 
             model = genai.GenerativeModel(
-                model_name="gemini-2.5-flash",
+                model_name="gemini-1.5-flash",
                 system_instruction=dynamic_system_prompt,
                 tools=tools if tools else None
             )
