@@ -19,6 +19,15 @@ class ChatbotService:
         """
         Routes the message to the active AI model configured in .env.
         """
+        if current_user and conn and "name" not in current_user:
+            try:
+                from repositories.user_repository import find_by_id
+                user_record = find_by_id(conn, current_user["sub"])
+                if user_record and user_record.get("name"):
+                    current_user["name"] = user_record["name"]
+            except Exception:
+                pass
+
         if ACTIVE_AI_MODEL == "gemini":
             return ChatbotService._get_gemini_response(user_message, context, current_user, conn)
         elif ACTIVE_AI_MODEL == "chatgpt":
@@ -54,8 +63,9 @@ class ChatbotService:
                 dynamic_system_prompt += f"\n\nContext: The user is currently reading an article titled '{context.get('article_title')}'. Content snippet: {article_content}... If they ask questions, answer based on this article."
 
         try:
-            import google.generativeai as genai
-            genai.configure(api_key=api_key)
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=api_key)
             
             tools = []
             if conn:
@@ -69,12 +79,13 @@ class ChatbotService:
                 
                 tools.append(search_articles_in_db)
 
-            model = genai.GenerativeModel(
-                model_name="gemini-1.5-flash",
-                system_instruction=dynamic_system_prompt,
-                tools=tools if tools else None
+            chat = client.chats.create(
+                model="gemini-3.5-flash",
+                config=types.GenerateContentConfig(
+                    system_instruction=dynamic_system_prompt,
+                    tools=tools if tools else None,
+                )
             )
-            chat = model.start_chat(enable_automatic_function_calling=bool(tools))
             response = chat.send_message(user_message)
             return response.text
         except Exception as e:
@@ -89,13 +100,25 @@ class ChatbotService:
         if not api_key:
             return "OpenAI API key is not configured."
         
+        dynamic_system_prompt = SYSTEM_PROMPT
+        if current_user:
+            dynamic_system_prompt += f"\n\nThe user's name is {current_user.get('name', 'User')}. "
+            if conn:
+                try:
+                    from repositories.user_repository import get_dashboard_stats
+                    stats = get_dashboard_stats(conn, current_user["sub"])
+                    vocab_today = stats.get("vocab", {}).get("today", 0)
+                    dynamic_system_prompt += f"They have learned {vocab_today} new words today. "
+                except Exception:
+                    pass
+
         try:
             from openai import OpenAI
             client = OpenAI(api_key=api_key)
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": dynamic_system_prompt},
                     {"role": "user", "content": user_message}
                 ]
             )
@@ -110,13 +133,25 @@ class ChatbotService:
         if not api_key:
             return "Claude API key is not configured."
         
+        dynamic_system_prompt = SYSTEM_PROMPT
+        if current_user:
+            dynamic_system_prompt += f"\n\nThe user's name is {current_user.get('name', 'User')}. "
+            if conn:
+                try:
+                    from repositories.user_repository import get_dashboard_stats
+                    stats = get_dashboard_stats(conn, current_user["sub"])
+                    vocab_today = stats.get("vocab", {}).get("today", 0)
+                    dynamic_system_prompt += f"They have learned {vocab_today} new words today. "
+                except Exception:
+                    pass
+
         try:
             from anthropic import Anthropic
             client = Anthropic(api_key=api_key)
             response = client.messages.create(
                 model="claude-3-haiku-20240307",
                 max_tokens=500,
-                system=SYSTEM_PROMPT,
+                system=dynamic_system_prompt,
                 messages=[
                     {"role": "user", "content": user_message}
                 ]
