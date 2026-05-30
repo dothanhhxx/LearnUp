@@ -7,7 +7,7 @@ const API_BASE_URL =
     (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1')
         ? 'http://localhost:8001'
-        : 'https://learnup-p91u.onrender.com';
+        : 'https://learnup-backend-3fev.onrender.com';
 
 /**
  * Fetch wrapper với error handling

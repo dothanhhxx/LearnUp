@@ -30,7 +30,7 @@ class Chatbot {
         this.window = document.createElement('div');
         this.window.className = 'chatbot-window';
         this.window.id = 'chatbot-window';
-        
+
         this.window.innerHTML = `
             <div class="chat-header">
                 <div class="chat-header-info">
@@ -67,7 +67,7 @@ class Chatbot {
     attachEvents() {
         this.bubble.addEventListener('click', () => this.toggleWindow());
         this.closeBtn.addEventListener('click', () => this.toggleWindow());
-        
+
         this.sendBtn.addEventListener('click', () => this.sendMessage());
         this.inputField.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.sendMessage();
@@ -110,7 +110,7 @@ class Chatbot {
     addMessage(text, sender) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${sender}`;
-        
+
         // Basic markdown formatting (bold, code)
         let formattedText = text;
         if (sender === 'bot') {
@@ -122,7 +122,7 @@ class Chatbot {
             <div class="message-content">${formattedText}</div>
             <span class="message-time">${this.getCurrentTime()}</span>
         `;
-        
+
         this.messagesContainer.appendChild(msgDiv);
         this.scrollToBottom();
     }
@@ -165,7 +165,7 @@ class Chatbot {
         // Display user message
         this.addMessage(text, 'user');
         this.inputField.value = '';
-        
+
         // Show typing indicator
         this.showTyping();
 
@@ -184,7 +184,7 @@ class Chatbot {
             // Call Backend API
             // Try to use the project's apiFetch if available, else native fetch
             let responseText = '';
-            
+
             const requestBody = { message: text, context: context };
 
             if (typeof apiFetch === 'function') {
@@ -192,7 +192,7 @@ class Chatbot {
                     method: 'POST',
                     body: JSON.stringify(requestBody)
                 });
-                
+
                 if (res.success && res.data) {
                     responseText = res.data.response;
                 } else {
