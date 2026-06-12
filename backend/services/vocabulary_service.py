@@ -1,12 +1,13 @@
 """
 Vocabulary Service — Business logic cho Vocabulary.
 """
-from repositories import vocabulary_repository
-from utils.exceptions import NotFoundException, ConflictException
+from repositories import vocabulary_repository, user_repository
+from utils.exceptions import NotFoundException, ConflictException, UnauthorizedException
 
 
-def get_user_vocab(user_id: int, conn):
+def get_user_vocab(user_id, conn):
     """Lấy danh sách từ vựng của user."""
+    user_id = int(user_id)  # JWT sub có thể là int hoặc float — chuẩn hóa
     vocabs = vocabulary_repository.find_by_user(conn, user_id)
 
     for vocab in vocabs:
@@ -16,10 +17,17 @@ def get_user_vocab(user_id: int, conn):
     return {"success": True, "data": vocabs, "total": len(vocabs)}
 
 
-def save_word(user_id: int, word: str, article_id: str, conn,
+def save_word(user_id, word: str, article_id: str, conn,
               phonetic: str = None, definition: str = None, example: str = None,
               vietnamese: str = None):
     """Lưu từ vựng mới cho user (bao gồm phonetic, definition, example, vietnamese)."""
+    user_id = int(user_id)  # chuẩn hóa từ JWT sub (có thể là float)
+
+    # Xác minh user tồn tại trong DB — tránh FK constraint crash
+    user = user_repository.find_by_id(conn, user_id)
+    if not user:
+        raise UnauthorizedException("User account not found. Please log in again.")
+
     if not word or not word.strip():
         raise ValueError("Word cannot be empty.")
 
@@ -37,8 +45,9 @@ def save_word(user_id: int, word: str, article_id: str, conn,
     return {"success": True, "message": f"'{word}' saved to your dictionary.", "id": vocab_id}
 
 
-def delete_word(vocab_id: str, user_id: int, conn):
+def delete_word(vocab_id: str, user_id, conn):
     """Xóa từ vựng (chỉ owner)."""
+    user_id = int(user_id)  # chuẩn hóa từ JWT sub
     deleted = vocabulary_repository.delete(conn, vocab_id, user_id)
     if not deleted:
         raise NotFoundException("Vocabulary not found or you don't have permission.")

@@ -537,15 +537,14 @@
     /* Quiz FAB button */
     .mob-nav-fab {
         position: relative;
-        top: -10px;
         color: var(--m-sub) !important;
     }
 
     .mob-nav-fab::after { display: none !important; }
 
     .mob-nav-fab-disc {
-        width: 50px;
-        height: 50px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--m-blue) 0%, #60a5fa 100%);
         display: flex;
@@ -561,9 +560,9 @@
         box-shadow: 0 2px 8px rgba(37,99,235,0.28);
     }
 
-    .mob-nav-fab i { font-size: 20px; transform: none !important; }
+    .mob-nav-fab i { font-size: 18px; transform: none !important; }
 
-    .mob-nav-fab .mob-nav-lbl { color: var(--m-sub); margin-top: 2px; }
+    .mob-nav-fab .mob-nav-lbl { color: var(--m-sub); margin-top: 4px; }
 }
 
 /* =========================================================================

@@ -65,7 +65,7 @@ class Chatbot {
     }
 
     attachEvents() {
-        this.bubble.addEventListener('click', () => this.toggleWindow());
+        this.makeDraggable();
         this.closeBtn.addEventListener('click', () => this.toggleWindow());
 
         this.sendBtn.addEventListener('click', () => this.sendMessage());
@@ -100,6 +100,97 @@ class Chatbot {
         } else {
             this.window.classList.remove('open');
         }
+    }
+
+    makeDraggable() {
+        let isDragging = false;
+        let didDrag = false;
+        let startX, startY, initialLeft, initialTop;
+
+        const pointerDown = (e) => {
+            if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            } else {
+                startX = e.clientX;
+                startY = e.clientY;
+            }
+
+            const rect = this.bubble.getBoundingClientRect();
+            // Convert right/bottom to left/top to avoid layout jumping
+            this.bubble.style.left = rect.left + 'px';
+            this.bubble.style.top = rect.top + 'px';
+            this.bubble.style.bottom = 'auto';
+            this.bubble.style.right = 'auto';
+
+            initialLeft = rect.left;
+            initialTop = rect.top;
+
+            isDragging = true;
+            didDrag = false;
+
+            document.addEventListener('mousemove', pointerMove);
+            document.addEventListener('mouseup', pointerUp);
+            document.addEventListener('touchmove', pointerMove, { passive: false });
+            document.addEventListener('touchend', pointerUp);
+        };
+
+        const pointerMove = (e) => {
+            if (!isDragging) return;
+
+            let currentX, currentY;
+            if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX;
+                currentY = e.touches[0].clientY;
+            } else {
+                currentX = e.clientX;
+                currentY = e.clientY;
+            }
+
+            const dx = currentX - startX;
+            const dy = currentY - startY;
+
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+                didDrag = true;
+            }
+
+            if (didDrag) {
+                if (e.cancelable) e.preventDefault(); // Prevent scrolling on touch
+                
+                let newLeft = initialLeft + dx;
+                let newTop = initialTop + dy;
+
+                const maxX = window.innerWidth - this.bubble.offsetWidth;
+                const maxY = window.innerHeight - this.bubble.offsetHeight;
+
+                newLeft = Math.max(0, Math.min(newLeft, maxX));
+                newTop = Math.max(0, Math.min(newTop, maxY));
+
+                this.bubble.style.left = newLeft + 'px';
+                this.bubble.style.top = newTop + 'px';
+            }
+        };
+
+        const pointerUp = (e) => {
+            isDragging = false;
+            document.removeEventListener('mousemove', pointerMove);
+            document.removeEventListener('mouseup', pointerUp);
+            document.removeEventListener('touchmove', pointerMove);
+            document.removeEventListener('touchend', pointerUp);
+        };
+
+        this.bubble.addEventListener('mousedown', pointerDown);
+        this.bubble.addEventListener('touchstart', pointerDown, { passive: true });
+
+        // Update click to ignore if dragged
+        this.bubble.addEventListener('click', (e) => {
+            if (didDrag) {
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                this.toggleWindow();
+            }
+        });
     }
 
     getCurrentTime() {

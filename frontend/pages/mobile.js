@@ -359,6 +359,17 @@
             const views = (btn.dataset.views || '').split(',');
             btn.classList.toggle('active', views.includes(view));
         });
+
+        // Hide bottom nav if not logged in or on auth/landing pages
+        const nav = document.getElementById('mob-bottom-nav');
+        if (nav) {
+            const loggedIn = typeof isLoggedIn === 'function' ? isLoggedIn() : !!_getUser();
+            if (!loggedIn || view === 'landing' || view === 'login' || view === 'register') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+            }
+        }
     }
 
     /* expose for app.js to call after render */
