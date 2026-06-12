@@ -193,3 +193,31 @@ def update_role(conn, user_id: int, role: str) -> bool:
         return cursor.rowcount > 0
     finally:
         cursor.close()
+
+
+def update_password(conn, user_id: int, new_password_hash: str) -> bool:
+    """Cập nhật password hash cho user. Trả về True nếu thành công."""
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "UPDATE users SET password_hash = %s WHERE id = %s",
+            (new_password_hash, user_id)
+        )
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        cursor.close()
+
+
+def update_password_by_email(conn, email: str, new_password_hash: str) -> bool:
+    """Cập nhật password hash theo email. Trả về True nếu thành công."""
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "UPDATE users SET password_hash = %s WHERE email = %s",
+            (new_password_hash, email)
+        )
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        cursor.close()

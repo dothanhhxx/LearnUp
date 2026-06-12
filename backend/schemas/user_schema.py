@@ -43,3 +43,23 @@ class TokenResponse(BaseModel):
     token: str
     user: UserResponse
 
+
+# ===== Change Password =====
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+
+# ===== Forgot / Reset Password =====
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class VerifyOTPRequest(BaseModel):
+    email: EmailStr
+    otp: str
+
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    new_password: str

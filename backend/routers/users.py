@@ -4,8 +4,11 @@ Thin layer — chỉ nhận request, gọi service, trả response.
 """
 from fastapi import APIRouter, Depends
 from config.database import get_db
-from schemas.user_schema import LoginRequest, RegisterRequest, AdminCreateUserRequest, UpdateRoleRequest
-from services import user_service
+from schemas.user_schema import (
+    LoginRequest, RegisterRequest, AdminCreateUserRequest, UpdateRoleRequest,
+    ChangePasswordRequest, ForgotPasswordRequest, VerifyOTPRequest, ResetPasswordRequest
+)
+from services import user_service, password_reset_service
 from middleware.auth_middleware import get_current_user, require_admin
 from repositories import user_repository
 
@@ -79,3 +82,35 @@ def admin_update_role(
 ):
     """Admin cập nhật role của user."""
     return user_service.admin_update_role(user_id, request.role, conn)
+
+
+# ===== Change Password (authenticated) =====
+@router.post("/change-password")
+def change_password(
+    request: ChangePasswordRequest,
+    current_user=Depends(get_current_user),
+    conn=Depends(get_db)
+):
+    """User đổi mật khẩu (phải đăng nhập)."""
+    return user_service.change_password(
+        current_user["sub"], request.current_password, request.new_password, conn
+    )
+
+
+# ===== Forgot Password (OTP flow) =====
+@router.post("/forgot-password")
+def forgot_password(request: ForgotPasswordRequest, conn=Depends(get_db)):
+    """Bước 1 — Gửi OTP vào email."""
+    return password_reset_service.request_otp(request.email, conn)
+
+
+@router.post("/verify-otp")
+def verify_otp(request: VerifyOTPRequest):
+    """Bước 2 — Xác minh OTP."""
+    return password_reset_service.verify_otp(request.email, request.otp)
+
+
+@router.post("/reset-password")
+def reset_password(request: ResetPasswordRequest, conn=Depends(get_db)):
+    """Bước 3 — Đặt mật khẩu mới."""
+    return password_reset_service.reset_password(request.email, request.new_password, conn)

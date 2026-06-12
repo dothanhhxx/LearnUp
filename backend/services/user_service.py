@@ -133,3 +133,29 @@ def admin_update_role(user_id: int, role: str, conn):
         from utils.exceptions import NotFoundException
         raise NotFoundException("User not found.")
     return {"success": True, "message": f"Role updated to '{role}'"}
+
+
+def change_password(user_id: int, current_password: str, new_password: str, conn):
+    """
+    Đổi mật khẩu cho user đã đăng nhập.
+    """
+    from utils.exceptions import UnauthorizedException
+
+    user = user_repository.find_by_id(conn, user_id)
+    if not user:
+        raise UnauthorizedException("User not found.")
+
+    # Need password_hash for verification
+    full_user = user_repository.find_by_email(conn, user["email"])
+    if not full_user or not verify_password(current_password, full_user["password_hash"]):
+        raise UnauthorizedException("Current password is incorrect.")
+
+    if len(new_password) < 8:
+        raise BadRequestException("New password must be at least 8 characters long.")
+
+    new_hash = hash_password(new_password)
+    updated = user_repository.update_password(conn, user_id, new_hash)
+    if not updated:
+        raise BadRequestException("Failed to update password.")
+
+    return {"success": True, "message": "Password changed successfully."}

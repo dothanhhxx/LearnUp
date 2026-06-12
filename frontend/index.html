@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>LearnUP - Master English</title>
     <meta name="description" content="Learn English through articles, vocabulary, and interactive quizzes.">
 
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="styles/admin.css">
     <link rel="stylesheet" href="admin/admin.css">
     <link rel="stylesheet" href="styles/chatbot.css">
+    <link rel="stylesheet" href="styles/mobile.css">
 
     <!-- Google Fonts -->
     <link
@@ -71,6 +72,9 @@
                             <i class="fa-solid fa-newspaper"></i> Articles
                         </a>
                         <div class="user-dropdown-divider"></div>
+                        <a href="#" class="user-dropdown-item change-password-item change-password-btn">
+                            <i class="fa-solid fa-lock"></i> Change Password
+                        </a>
                         <a href="#" class="user-dropdown-item logout-btn">
                             <i class="fa-solid fa-right-from-bracket"></i> Logout
                         </a>
@@ -374,6 +378,8 @@
     <script src="pages/landing/landing-page.js"></script>
     <script src="pages/auth/login.js"></script>
     <script src="pages/auth/register.js"></script>
+    <script src="pages/auth/forgot-password.js"></script>
+    <script src="pages/auth/change-password.js"></script>
     <script src="pages/articles/articles-list.js"></script>
     <script src="pages/articles/article-detail.js"></script>
     <script src="pages/vocabulary/vocabulary.js"></script>
@@ -382,7 +388,10 @@
     <!-- 5. Admin -->
     <script src="admin/admin.js"></script>
 
-    <!-- 6. Main App (bootstrapper – loads last) -->
+    <!-- 6. Mobile UI controller -->
+    <script src="pages/mobile.js"></script>
+
+    <!-- 7. Main App (bootstrapper – loads last) -->
     <script src="app.js"></script>
 </body>
 

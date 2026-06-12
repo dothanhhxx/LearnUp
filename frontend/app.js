@@ -10,6 +10,8 @@ const TEMPLATE_PATHS = [
     'pages/landing/landing-page.html',
     'pages/auth/login.html',
     'pages/auth/register.html',
+    'pages/auth/forgot-password.html',
+    'pages/auth/change-password.html',
     'pages/articles/articles-list.html',
     'pages/articles/article-detail.html',
     'pages/vocabulary/vocabulary.html',
@@ -80,17 +82,18 @@ function renderApp() {
 
     // Map view names to template IDs and event handlers
     const viewConfig = {
-        'landing':          { templateId: 'landing-template',         events: attachLandingEvents },
-        'login':            { templateId: 'login-template',          events: attachLoginEvents },
-        'register':         { templateId: 'register-template',       events: attachRegisterEvents },
-        'articles':         { templateId: 'articles-template',       events: attachArticlesEvents },
-        'article-detail':   { templateId: 'article-detail-template', events: attachArticleDetailEvents },
-        'vocabulary':       { templateId: 'vocabulary-template',     events: attachVocabularyEvents },
-        'quiz':             { templateId: 'quiz-template',           events: attachQuizEvents },
-        'user-dashboard':   { templateId: 'user-dashboard-template', events: attachDashboardEvents },
-        'admin-articles':   { templateId: 'admin-articles-template', events: attachAdminArticlesEvents },
-        'admin-categories': { templateId: 'admin-categories-template', events: attachAdminCategoriesEvents },
-        'admin-users':      { templateId: 'admin-users-template',      events: attachAdminUsersEvents },
+        'landing':            { templateId: 'landing-template',          events: attachLandingEvents },
+        'login':              { templateId: 'login-template',           events: attachLoginEvents },
+        'register':           { templateId: 'register-template',        events: attachRegisterEvents },
+        'forgot-password':    { templateId: 'forgot-password-template', events: attachForgotPasswordEvents },
+        'articles':           { templateId: 'articles-template',        events: attachArticlesEvents },
+        'article-detail':     { templateId: 'article-detail-template',  events: attachArticleDetailEvents },
+        'vocabulary':         { templateId: 'vocabulary-template',      events: attachVocabularyEvents },
+        'quiz':               { templateId: 'quiz-template',            events: attachQuizEvents },
+        'user-dashboard':     { templateId: 'user-dashboard-template',  events: attachDashboardEvents },
+        'admin-articles':     { templateId: 'admin-articles-template',  events: attachAdminArticlesEvents },
+        'admin-categories':   { templateId: 'admin-categories-template', events: attachAdminCategoriesEvents },
+        'admin-users':        { templateId: 'admin-users-template',      events: attachAdminUsersEvents },
     };
 
     const config = viewConfig[AppState.currentView];
@@ -136,6 +139,14 @@ function renderApp() {
     if (window.learnUpChatbot) {
         window.learnUpChatbot.checkVisibility();
     }
+
+    // ── Mobile: re-init after every SPA view render ──
+    if (typeof window.initMobileUI === 'function') {
+        setTimeout(() => {
+            window.initMobileUI();
+            if (typeof window.syncMobileNav === 'function') window.syncMobileNav();
+        }, 60);
+    }
 }
 
 /**
@@ -162,6 +173,17 @@ function attachUserDropdownEvents() {
             e.stopPropagation();
             menu.classList.toggle('show');
         });
+
+        // Change password button
+        const changePassBtn = menu.querySelector('.change-password-btn');
+        if (changePassBtn) {
+            changePassBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                menu.classList.remove('show');
+                openChangePasswordModal();
+            });
+        }
 
         // Logout button
         const logoutBtn = menu.querySelector('.logout-btn');
@@ -642,6 +664,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (typeof initChatbot === 'function') {
         initChatbot();
     }
+
+    // Mobile drawer: delegate logout / change-password clicks at body level
+    // so they work even after drawer DOM is rebuilt on re-init
+    document.body.addEventListener('click', (e) => {
+        const logoutBtn = e.target.closest('#mob-drawer .logout-btn');
+        if (logoutBtn) { e.preventDefault(); logout(); return; }
+
+        const cpBtn = e.target.closest('#mob-drawer .change-password-btn');
+        if (cpBtn) {
+            e.preventDefault();
+            if (document.getElementById('mob-drawer')) {
+                document.getElementById('mob-drawer').classList.remove('open');
+                document.getElementById('mob-drawer-overlay')?.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+            setTimeout(() => openChangePasswordModal(), 280);
+        }
+    });
 
     // Initial render
     renderApp();

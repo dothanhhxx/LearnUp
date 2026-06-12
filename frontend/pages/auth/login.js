@@ -97,4 +97,13 @@ function attachLoginEvents() {
             animateTransition('landing');
         });
     }
+
+    // Forgot password link
+    const forgotLink = document.getElementById('go-forgot-password');
+    if (forgotLink) {
+        forgotLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            animateTransition('forgot-password');
+        });
+    }
 }
